@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:tns="http://soaphw/"
+    targetNamespace="http://soaphw/">
+   <wsdl:documentation> </wsdl:documentation>
+   <!-- types (0,1) -->
+    <wsdl:types>
+        <xs:schema xmlns:tns="http://soaphw/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://soaphw/">
+            <xs:element name="getCompanyByName" type="tns:getCompanyByName"/>
+            <xs:element name="getCompanyByNameResponse" type="tns:getCompanyByNameResponse"/>
+            <xs:element name="getCompany" type="tns:getCompany"/>
+            <xs:element name="getCompanyResponse" type="tns:getCompanyResponse"/>
+            <xs:complexType name="getCompany">
+                <xs:sequence>
+                    <xs:element name="arg0" type="xs:int" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getCompanyResponse">
+                <xs:sequence>
+                    <xs:element name="ReturnedTender" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getCompanyByName">
+                <xs:sequence>
+                    <xs:element name="arg0" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getCompanyByNameResponse">
+                <xs:sequence>
+                    <xs:element name="return" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+   <!-- messages (0,*) -->
+    <wsdl:message name="getCompanyRequestMessage">
+        <wsdl:part name="getCompanyRequestMessagePart" element="tns:getCompany"/>
+    </wsdl:message>
+    <wsdl:message name="getCompanyResponseMessage">
+        <wsdl:part name="getCompanyResponseMessagePart" element="tns:getCompanyResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getCompanyByNameRequestMessage">
+        <wsdl:part name="getCompanyByNameRequestMessagePart" element="tns:getCompanyByName"/>
+    </wsdl:message>
+    <wsdl:message name="getCompanyByNameResponseMessage">
+        <wsdl:part name="getCompanyByNameResponseMessagePart" element="tns:getCompanyByNameResponse"/>
+    </wsdl:message>
+
+   <!-- port types (0,*) -->
+    <wsdl:portType name="CompanyWSPortType">
+	    <wsdl:operation name="getCompanyOperation" >
+                <wsdl:input message="tns:getCompanyRequestMessage"/>
+                <wsdl:output message="tns:getCompanyResponseMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="getCompanyByNameOperation" >
+                <wsdl:input message="tns:getCompanyByNameRequestMessage"/>
+                <wsdl:output message="tns:getCompanyByNameResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+   <!-- bindings (0,*) -->
+    <wsdl:binding name="CompanyWSBinding" type="tns:CompanyWSPortType">
+  
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+  
+        <wsdl:operation name="getCompanyOperation">
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getCompanyByNameOperation">
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+      </wsdl:operation>
+
+    </wsdl:binding>
+   <!-- services (0,*) -->
+   <wsdl:service name="CompanyWSService">
+        <wsdl:port binding="tns:CompanyWSBinding" name="CompanyWSPort">
+            <soap:address location="http://127.0.0.1:80/CompanyWS"/>
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>
