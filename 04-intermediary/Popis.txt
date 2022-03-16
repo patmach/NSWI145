@@ -1,0 +1,8 @@
+- Klient odešle SOAP request na vyhledání společností (companies) dle názvu a zároveň v hlavičce nastaví maximální počet
+	záznamů, které se mají vrátit.
+- Intermediary získá z hlavičky maximální počet záznamů, odebere hlavičku a pošle dotaz přímo na server.
+- Server vráti intermediary záznamy nalezených společností.
+- Intermediary upraví JSONArray s nalezenými společnostmi tak, že v případě, že je jejich počet vyšší než maximální počet záznamů
+	(specifikovaný klientem), tak přebytečné záznamy z tohoto JSONArray odstraní.
+- Intermediary ještě přidá hlavičku, kde klientovi napíše, jaký byl nastavený maximální počet záznamů a takto upravenou response 
+	od serveru odešle klientovi
