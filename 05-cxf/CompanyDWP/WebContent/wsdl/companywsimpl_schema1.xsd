@@ -1,0 +1,35 @@
+<xs:schema xmlns:tns="http://ws/" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" targetNamespace="http://ws/" version="1.0">
+
+  <xs:element name="getCompany" type="tns:getCompany"/>
+
+  <xs:element name="getCompanyByName" type="tns:getCompanyByName"/>
+
+  <xs:element name="getCompanyByNameResponse" type="tns:getCompanyByNameResponse"/>
+
+  <xs:element name="getCompanyResponse" type="tns:getCompanyResponse"/>
+
+  <xs:complexType name="getCompany">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getCompanyResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getCompanyByName">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getCompanyByNameResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>

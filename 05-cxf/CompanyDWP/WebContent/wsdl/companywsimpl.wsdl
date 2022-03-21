@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="CompanyWSImplService" targetNamespace="http://ws/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://ws/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema">
+  <import namespace="http://ws/" schemaLocation="companywsimpl_schema1.xsd"/>
+</schema>
+  </wsdl:types>
+  <wsdl:message name="getCompanyResponse">
+    <wsdl:part name="parameters" element="tns:getCompanyResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCompany">
+    <wsdl:part name="parameters" element="tns:getCompany">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCompanyByName">
+    <wsdl:part name="parameters" element="tns:getCompanyByName">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCompanyByNameResponse">
+    <wsdl:part name="parameters" element="tns:getCompanyByNameResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="CompanyWS">
+    <wsdl:operation name="getCompany">
+      <wsdl:input name="getCompany" message="tns:getCompany">
+    </wsdl:input>
+      <wsdl:output name="getCompanyResponse" message="tns:getCompanyResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCompanyByName">
+      <wsdl:input name="getCompanyByName" message="tns:getCompanyByName">
+    </wsdl:input>
+      <wsdl:output name="getCompanyByNameResponse" message="tns:getCompanyByNameResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CompanyWSImplServiceSoapBinding" type="tns:CompanyWS">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getCompany">
+      <soap:operation soapAction="urn:GetCompany" style="document"/>
+      <wsdl:input name="getCompany">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getCompanyResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCompanyByName">
+      <soap:operation soapAction="urn:GetCompanyByName" style="document"/>
+      <wsdl:input name="getCompanyByName">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getCompanyByNameResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CompanyWSImplService">
+    <wsdl:port name="CompanyWSImplPort" binding="tns:CompanyWSImplServiceSoapBinding">
+      <soap:address location="http://localhost:8080/CompanyDWP/services/CompanyWSImplPort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
