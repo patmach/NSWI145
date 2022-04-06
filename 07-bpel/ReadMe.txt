@@ -1,0 +1,1 @@
+Bohužel mi nefunguje předávání parametrů na moje web services. Ačkoli i dle debuggingu jednotlivých instancí se posílá správná hodnota, na webovou službu dojde vždy jen defaultní hodnota.

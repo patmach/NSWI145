@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:tns="http://soaphw/"
+    targetNamespace="http://soaphw/">
+   <wsdl:documentation> </wsdl:documentation>
+   <!-- types (0,1) -->
+    <wsdl:types>
+        <xs:schema xmlns:tns="http://soaphw/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://soaphw/">
+            <xs:element name="changeTenderName" type="tns:changeTenderName"/>
+            <xs:element name="changeTenderNameResponse" type="tns:changeTenderNameResponse"/>
+            <xs:element name="getTender" type="tns:getTender"/>
+            <xs:element name="getTenderResponse" type="tns:getTenderResponse"/>
+            <xs:complexType name="getTender">
+                <xs:sequence>
+                    <xs:element name="arg0" type="xs:int" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getTenderResponse">
+                <xs:sequence>
+                    <xs:element name="ReturnedTender" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="changeTenderName">
+                <xs:sequence>
+                    <xs:element name="arg0" type="xs:int" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="arg1" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="changeTenderNameResponse">
+                <xs:sequence>
+                    <xs:element name="return" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+   <!-- messages (0,*) -->
+    <wsdl:message name="getTenderRequestMessage">
+        <wsdl:part name="getTenderRequestMessagePart" element="tns:getTender"/>
+    </wsdl:message>
+    <wsdl:message name="getTenderResponseMessage">
+        <wsdl:part name="getTenderResponseMessagePart" element="tns:getTenderResponse"/>
+    </wsdl:message>
+    <wsdl:message name="changeTenderNameRequestMessage">
+        <wsdl:part name="changeTenderNameRequestMessagePart" element="tns:changeTenderName"/>
+    </wsdl:message>
+    <wsdl:message name="changeTenderNameResponseMessage">
+        <wsdl:part name="changeTenderNameResponseMessagePart" element="tns:changeTenderNameResponse"/>
+    </wsdl:message>
+
+   <!-- port types (0,*) -->
+    <wsdl:portType name="TenderWSPortType">
+	    <wsdl:operation name="GetTenderOperation" >
+                <wsdl:input message="tns:getTenderRequestMessage"/>
+                <wsdl:output message="tns:getTenderResponseMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ChangeTenderNameOperation" >
+                <wsdl:input message="tns:changeTenderNameRequestMessage"/>
+                <wsdl:output message="tns:changeTenderNameResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+   <!-- bindings (0,*) -->
+    <wsdl:binding name="TenderWSBinding" type="tns:TenderWSPortType">
+  
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+  
+        <wsdl:operation name="GetTenderOperation">
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ChangeTenderNameOperation">
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+      </wsdl:operation>
+
+    </wsdl:binding>
+   <!-- services (0,*) -->
+   <wsdl:service name="TenderWSService">
+        <wsdl:port binding="tns:TenderWSBinding" name="TenderWSPort">
+            <soap:address location="http://127.0.0.1:8000/TenderWS"/>
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

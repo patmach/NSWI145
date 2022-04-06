@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:tns="http://nswi145/Tender/wsdl" 
+   xmlns:tnsxsd="http://nswi145/Tender/xsd" 
+   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+   xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" 
+   xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+   xmlns:tenderws="http://soaphw/"
+   targetNamespace="http://nswi145/Tender/wsdl">
+    <wsdl:import location="TenderWS.wsdl"
+      namespace="http://soaphw/" />
+      <wsdl:import location="CompanyWS.wsdl"
+      namespace="http://soaphw/" />
+
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://nswi145/Tender/xsd">
+			<xsd:element name="companyICOIn" type="xsd:string"/>            
+			<xsd:element name="tenderIDin" type="xsd:string"/>
+			<xsd:element name="responseOut" type="xsd:string"/>
+		</xsd:schema>
+	</wsdl:types>
+	
+	<wsdl:message name="TenderInputMessage">
+       <!-- <wsdl:part name="parametersICO" element="tnsxsd:companyICOIn"/> -->
+		<wsdl:part name="parametersID" element="tnsxsd:tenderIDin"/>
+	</wsdl:message>
+	
+	<wsdl:message name="TenderOutputMessage">
+		<wsdl:part name="parameters" element="tnsxsd:responseOut"/>
+	</wsdl:message>
+	
+	<wsdl:portType name="TenderPortType">
+		<wsdl:operation name="addCompanyToTenderName">
+			<wsdl:input name="TenderIn" message="tns:TenderInputMessage"/>
+			<wsdl:output name="TenderOut" message="tns:TenderOutputMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:portType name="CompanyResponsePortType">
+		<wsdl:operation name="getCompanyOperation">
+			<wsdl:input name="getCompanyIn" message="tenderws:getCompanyResponseMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+    <wsdl:portType name="TenderResponsePortType">
+		<wsdl:operation name="getTenderOperation">
+			<wsdl:input name="getTenderIn" message="tenderws:getTenderResponseMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+    <wsdl:portType name="ChangeTenderNameResponsePortType">
+		<wsdl:operation name="changeTenderNameOperation">
+			<wsdl:input name="changeTenderNameIn" message="tenderws:changeTenderNameResponseMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="AddCompanyToTenderNameSOAPBinding" type="tns:TenderPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="addCompanyToTenderName">
+			<soap:operation soapAction="urn:addCompanyToTenderName" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+	<wsdl:binding name="GetCompanySOAPBinding" type="tns:CompanyResponsePortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getCompanyOperation">
+			<soap:operation soapAction="urn:getCompanyResponseOperation" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+		</wsdl:operation>
+	</wsdl:binding>
+
+    <wsdl:binding name="GetTenderSOAPBinding" type="tns:TenderResponsePortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getTenderOperation">
+			<soap:operation soapAction="urn:getTenderResponseOperation" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+		</wsdl:operation>
+	</wsdl:binding>
+
+    <wsdl:binding name="ChangeTenderNameSOAPBinding" type="tns:ChangeTenderNameResponsePortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="changeTenderNameOperation">
+			<soap:operation soapAction="urn:mchangeTenderNameResponseOperation" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="AddCompanyToTenderNameService">
+		<wsdl:port name="AddCompanyToTenderNamePort" binding="tns:AddCompanyToTenderNameSOAPBinding">
+			<soap:address location="http://localhost:8080/ode/processes/AddCompanyToTenderNameService"/>
+		</wsdl:port>
+		<wsdl:port name="GetCompanyPort" binding="tns:GetCompanySOAPBinding">
+			<soap:address location="http://localhost:8080/ode/processes/AddCompanyToTenderNameServiceGetCompany"/>
+		</wsdl:port>
+        <wsdl:port name="GetTenderPort" binding="tns:GetTenderSOAPBinding">
+			<soap:address location="http://localhost:8080/ode/processes/AddCompanyToTenderNameServiceGetTender"/>
+		</wsdl:port>
+		<wsdl:port name="ChangeTenderNamePort" binding="tns:ChangeTenderNameSOAPBinding">
+			<soap:address location="http://localhost:8080/ode/processes/AddCompanyToTenderNameServiceChangeTenderName"/>
+		</wsdl:port>
+	</wsdl:service>
+
+	<plnk:partnerLinkType name="TenderLinkType">
+		<plnk:role name="TenderExecutorRole" portType="tns:TenderPortType"/>
+	</plnk:partnerLinkType>
+	
+	<plnk:partnerLinkType name="GetCompanyLinkType">
+	  <plnk:role name="GetCompanyRole" portType="tenderws:CompanyWSPortType" />
+	  <plnk:role name="GetCompanyClientRole" portType="tns:CompanyResponsePortType" />
+	</plnk:partnerLinkType>
+    <plnk:partnerLinkType name="GetTenderLinkType">
+	  <plnk:role name="GetTenderRole" portType="tenderws:TenderWSPortType" />
+	  <plnk:role name="GetTenderClientRole" portType="tns:TenderResponsePortType" />
+	</plnk:partnerLinkType>
+    <plnk:partnerLinkType name="ChangeTenderNameLinkType">
+	  <plnk:role name="ChangeTenderNameRole" portType="tenderws:TenderWSPortType" />
+	  <plnk:role name="ChangeTenderNameClientRole" portType="tns:ChangeTenderNameResponsePortType" />
+	</plnk:partnerLinkType>
+
+</wsdl:definitions>

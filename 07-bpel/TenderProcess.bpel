@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<process name="AddCompanyToTenderNameProcess"
+    targetNamespace="http://nswi145/Tender/bpel" 
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:tns="http://nswi145/Tender/bpel"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:tnswsdl="http://nswi145/Tender/wsdl"
+    xmlns:tnsxsd="http://nswi145/Tender/xsd"
+	xmlns:tenderws="http://soaphw/"
+    queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"
+    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0">
+
+  <import location="TenderProcess.wsdl"
+      namespace="http://nswi145/Tender/wsdl"
+      importType="http://schemas.xmlsoap.org/wsdl/" />
+
+  <partnerLinks>
+    <partnerLink name="TenderPartnerLink" 
+        partnerLinkType="tnswsdl:TenderLinkType" 
+        myRole="TenderExecutorRole" />
+    <partnerLink name="GetCompanyLink" 
+        partnerLinkType="tnswsdl:GetCompanyLinkType" 
+        myRole="GetCompanyClientRole" 
+		partnerRole="GetCompanyRole"/>
+    <partnerLink name="GetTenderLink" 
+        partnerLinkType="tnswsdl:GetTenderLinkType" 
+        myRole="GetTenderClientRole" 
+		partnerRole="GetTenderRole"/>
+    <partnerLink name="ChangeTenderNameLink" 
+        partnerLinkType="tnswsdl:ChangeTenderNameLinkType" 
+        myRole="ChangeTenderNameClientRole" 
+		partnerRole="ChangeTenderNameRole"/>
+  </partnerLinks>
+  
+  <variables>
+    <variable name="inputMessage" messageType="tnswsdl:TenderInputMessage" />
+    <variable name="inputICO" type="xsd:string" />
+    <variable name="inputID" type="xsd:string" />
+    <variable name="inputCompany" type="xsd:string" />
+
+    <variable name="getTenderRequestElement" element="tenderws:getTender" />
+    <variable name="getCompanyRequestElement" element="tenderws:getCompany" />
+    <variable name="changeTenderNameRequestElement" element="tenderws:changeTenderName" />
+
+    <variable name="getTenderRequest" messageType="tenderws:getTenderRequestMessage" />
+    <variable name="getCompanyRequest" messageType="tenderws:getCompanyRequestMessage" />
+    <variable name="changeTenderNameRequest" messageType="tenderws:changeTenderNameRequestMessage" />
+
+    <variable name="getTenderResponse" messageType="tenderws:getTenderResponseMessage" />
+    <variable name="getCompanyResponse" messageType="tenderws:getCompanyResponseMessage" />
+    <variable name="changeTenderNameResponse" messageType="tenderws:changeTenderNameResponseMessage" />
+
+    <variable name="getTenderResponseElement" element="tenderws:getTenderResponse" />
+    <variable name="getCompanyResponseElement" element="tenderws:getCompanyResponse" />
+    <variable name="changeTenderNameResponseElement" element="tenderws:changeTenderNameResponse" />
+
+    <variable name="outputMessage" messageType="tnswsdl:TenderOutputMessage" />
+  </variables>
+  
+  <sequence>
+
+    <receive
+        name="ReceiveTenderInputs"
+        partnerLink="TenderPartnerLink"
+        portType="tnswsdl:TenderPortType"
+        operation="addCompanyToTenderName"
+        variable="inputMessage"
+        createInstance="yes" />      
+    
+    <assign name="ParseInput">
+    	<!--<copy>
+    		<from variable="inputMessage" part="parametersICO"/>
+    		<to variable="inputICO"/>
+    	</copy>-->
+      <copy>
+        <from>45317054</from>
+        <to variable="inputICO"/>
+      </copy>
+
+      <copy>
+    		<from variable="inputMessage" part="parametersID"/>
+    		<to variable="inputID"/>
+    	</copy>
+    </assign>
+    <flow>
+      <assign name="InitGetTenderRequest">
+        <copy>
+          <from>
+            <literal>
+              <tenderws:getTender>
+                <tenderws:arg0></tenderws:arg0>
+              </tenderws:getTender>
+            </literal>
+          </from>
+          <to variable="getTenderRequestElement" />
+        </copy>
+        <copy>
+          <from>$inputID</from>
+          <to>$getTenderRequestElement/tenderws:arg0</to>
+        </copy>
+        <copy>
+          <from variable="getTenderRequestElement"/>
+          <to variable="getTenderRequest" part="getTenderRequestMessagePart"/>
+        </copy>
+      </assign>
+
+      <assign name="InitGetCompanyRequest">
+        <copy>
+          <from>
+            <literal>
+              <tenderws:getCompany>
+                <tenderws:arg0></tenderws:arg0>
+              </tenderws:getCompany>
+            </literal>
+          </from>
+          <to variable="getCompanyRequestElement" />
+        </copy>
+        <copy>
+          <from>$inputICO</from>
+          <to>$getCompanyRequestElement/tenderws:arg0</to>
+        </copy>
+        <copy>
+          <from variable="getCompanyRequestElement"/>
+          <to variable="getCompanyRequest" part="getCompanyRequestMessagePart"/>
+        </copy>
+      </assign>
+    </flow>
+
+    <flow>
+      <sequence>
+        <invoke
+              name="InvokeGetCompany"
+              partnerLink="GetCompanyLink"
+              operation="getCompanyOperation"
+              inputVariable="getCompanyRequest"
+              outputVariable="getCompanyResponse" />
+              
+          <assign name="ParseGetCompanyResponse">
+            <copy>
+              <from variable="getCompanyResponse" part="getCompanyResponseMessagePart"/>
+              <to variable="getCompanyResponseElement"/>
+            </copy>
+            <copy >
+              <from>'NoCompanyFound'</from>
+              <to variable="inputCompany"/>
+            </copy>
+            <copy ignoreMissingFromData="yes">
+              <from>$getCompanyResponseElement/ReturnedCompany</from>
+              <to variable="inputCompany"/>
+            </copy>
+          </assign> 
+    </sequence>
+     <invoke
+              name="InvokeGetTender"
+              partnerLink="GetTenderLink"
+              operation="GetTenderOperation"
+              inputVariable="getTenderRequest"
+              outputVariable="getTenderResponse" />
+              
+   </flow>
+
+  <assign name="InitChangeTenderNameRequest">
+        <copy>
+          <from>
+            <literal>
+              <tenderws:changeTenderName>
+                <tenderws:arg0></tenderws:arg0>
+                <tenderws:arg1></tenderws:arg1>
+              </tenderws:changeTenderName>
+            </literal>
+          </from>
+          <to variable="changeTenderNameRequestElement" />
+        </copy>
+        <copy>
+          <from>$inputID</from>
+          <to>$changeTenderNameRequestElement/tenderws:arg0</to>
+        </copy>
+        <copy>
+          <from>$inputCompany</from>
+          <to>$changeTenderNameRequestElement/tenderws:arg1</to>
+        </copy>
+        <copy>
+          <from variable="changeTenderNameRequestElement"/>
+          <to variable="changeTenderNameRequest" part="changeTenderNameRequestMessagePart"/>
+        </copy>
+      </assign>
+
+  <invoke
+    name="InvokeChangeTenderName"
+    partnerLink="ChangeTenderNameLink"
+    operation="ChangeTenderNameOperation"
+    inputVariable="changeTenderNameRequest"
+    outputVariable="changeTenderNameResponse" />
+      
+  <assign name="ParseChangeTenderNameResponse">
+    <copy>
+      <from variable="changeTenderNameResponse" part="changeTenderNameResponseMessagePart"/>
+      <to variable="changeTenderNameResponseElement"/>
+    </copy>
+    <copy>
+      <from>$changeTenderNameResponseElement/return</from>
+      <to variable="outputMessage" part="parameters"/>
+    </copy>
+  </assign> 
+
+
+    <reply name="TenderOutputs"  
+        partnerLink="TenderPartnerLink"
+        portType="tnswsdl:TenderPortType" 
+        operation="addCompanyToTenderName"
+        variable="outputMessage" />
+    
+    
+  </sequence>
+  
+</process>
