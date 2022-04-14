@@ -87,8 +87,8 @@
         <copy>
           <from>
             <literal>
-              <tenderws:getTender>
-                <tenderws:arg0></tenderws:arg0>
+              <tenderws:getTender xmlns="">
+                <arg0></arg0>
               </tenderws:getTender>
             </literal>
           </from>
@@ -96,7 +96,7 @@
         </copy>
         <copy>
           <from>$inputID</from>
-          <to>$getTenderRequestElement/tenderws:arg0</to>
+          <to>$getTenderRequestElement/arg0</to>
         </copy>
         <copy>
           <from variable="getTenderRequestElement"/>
@@ -108,8 +108,8 @@
         <copy>
           <from>
             <literal>
-              <tenderws:getCompany>
-                <tenderws:arg0></tenderws:arg0>
+              <tenderws:getCompany xmlns="">
+                <arg0></arg0>
               </tenderws:getCompany>
             </literal>
           </from>
@@ -117,7 +117,7 @@
         </copy>
         <copy>
           <from>$inputICO</from>
-          <to>$getCompanyRequestElement/tenderws:arg0</to>
+          <to>$getCompanyRequestElement/arg0</to>
         </copy>
         <copy>
           <from variable="getCompanyRequestElement"/>
@@ -163,9 +163,9 @@
         <copy>
           <from>
             <literal>
-              <tenderws:changeTenderName>
-                <tenderws:arg0></tenderws:arg0>
-                <tenderws:arg1></tenderws:arg1>
+              <tenderws:changeTenderName xmlns="">
+                <arg0></arg0>
+                <arg1></arg1>
               </tenderws:changeTenderName>
             </literal>
           </from>
@@ -173,11 +173,11 @@
         </copy>
         <copy>
           <from>$inputID</from>
-          <to>$changeTenderNameRequestElement/tenderws:arg0</to>
+          <to>$changeTenderNameRequestElement/arg0</to>
         </copy>
         <copy>
           <from>$inputCompany</from>
-          <to>$changeTenderNameRequestElement/tenderws:arg1</to>
+          <to>$changeTenderNameRequestElement/arg1</to>
         </copy>
         <copy>
           <from variable="changeTenderNameRequestElement"/>

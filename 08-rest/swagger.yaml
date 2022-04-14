@@ -1,0 +1,173 @@
+swagger: "2.0"
+info:
+  description: "This is a sample server for working with Tender database."
+  version: "1.0.0"
+  title: "Tenders"
+host: "localhost:8080"
+basePath: "/tenders"
+schemes:
+- "http"
+paths:
+  /tenders:
+    get:
+      tags:
+      - "tenders"
+      summary: "Return all tenders"
+      description: "Returns all tenders"
+      operationId: "getTenders"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Tender"
+
+  /tenders/{tenderID}:
+    get:
+      tags:
+      - "tender"
+      summary: "Find tender by ID"
+      description: "Returns a single tender"
+      operationId: "getTender"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "tenderID"
+        in: "path"
+        description: "ID of tender to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Tender"
+        "204":
+          description: "Tender not found"
+    post:
+      tags:
+      - "tender"
+      summary: "Adds a new tender to the databse."
+      description: ""
+      operationId: "postTender"
+      consumes:
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "tenderID"
+        in: "path"
+        description: "ID of tender to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Tender object that needs to be added to the database"
+        required: true
+        schema:
+          $ref: "#/definitions/Tender"
+      responses:
+        "409":
+          description: "Tender IDs do not match or tender with this ID already exists."
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        "201":
+          description: "Tender was added."
+          schema:
+            $ref: "#/definitions/ApiResponse"
+    put:
+      tags:
+      - "tender"
+      summary: "Adds or updates tender."
+      description: ""
+      operationId: "putTender"
+      consumes:
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "tenderID"
+        in: "path"
+        description: "ID of tender to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Tender object that needs to be added to the database"
+        required: true
+        schema:
+          $ref: "#/definitions/Tender"
+      responses:
+        "409":
+          description: "Tender IDs do not match or tender with this ID already exists."
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        "201":
+          description: "Tender was added."
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        "204":
+          description: "Tender was updated."
+          schema:
+            $ref: "#/definitions/ApiResponse"
+    delete:
+      tags:
+      - "tender"
+      summary: "Delete tender with given ID"
+      description: "Deletes a tender"
+      operationId: "deleteTender"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "tenderID"
+        in: "path"
+        description: "ID of tender to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "202":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        "409":
+          description: "Tender not found"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+definitions:
+  Tender:
+    type: "object"
+    required:
+    - "name"
+    - "ID"
+    - "amount"
+    properties:
+      ID:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      amount:
+        type: "integer"
+        format: "int64"
+    xml:
+      name: "Tender"
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"

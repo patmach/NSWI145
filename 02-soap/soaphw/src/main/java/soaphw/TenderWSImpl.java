@@ -20,7 +20,7 @@ public class TenderWSImpl implements TenderWS {
 		try {
 			if (tendersMap.containsKey(ID)){
 				tendersMap.get(ID).name += " (" + newName + ")";
-				return "{\"CONFIRM\": \"Realization of tender ("+ID+") was changed\"}";
+				return "{\"CONFIRM\": \"Name of tender ("+ID+") was changed\"}";
 			}
 			else return "{\"ERROR\": \"Tender with this ID is not stored in the database.\"}";
 		}
