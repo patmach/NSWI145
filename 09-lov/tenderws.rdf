@@ -14,4 +14,24 @@
 <http://tenderWS/tender/15002> akt:Amount-Of-Money "100 000 CZK" .
 <http://tenderWS/tender/15002> <http://ns.nature.com/terms/date> "15/5/2023" .
 
+<http://tenderWS/company/45317054> rdf:type <http://vivoweb.org/ontology/core#Company> .
+<http://tenderWS/company/45317054> rdfs:label "Komerční banka, a.s."@cs .
+<http://tenderWS/company/45317054> <http://purl.org/dc/terms/identifier> "45317054" .
+<http://tenderWS/company/45317054> <http://sw-portal.deri.org/ontologies/swportal#hasAddress> <http://tenderWS/address/45317054> .
 
+<http://tenderWS/address/45317054> rdf:type <http://www.w3.org/2006/vcard/ns#Address> .
+<http://tenderWS/address/45317054> <http://www.w3.org/2006/vcard/ns#street-address> "Na příkopě"@cs . 
+<http://tenderWS/address/45317054> <http://ontology.eil.utoronto.ca/icontact.owl#hasStreetNumber> "969/33" . 
+<http://tenderWS/address/45317054> <http://dbpedia.org/ontology/city> <https://www.praha.eu/> .
+
+<http://tenderWS/company/63469511> rdf:type <http://vivoweb.org/ontology/core#Company> .
+<http://tenderWS/company/63469511> rdfs:label "NWT a.s."@cs .
+<http://tenderWS/company/63469511> <http://purl.org/dc/terms/identifier> "63469511" .
+<http://tenderWS/company/63469511> <http://sw-portal.deri.org/ontologies/swportal#hasAddress> <http://tenderWS/address/63469511> .
+
+<http://tenderWS/address/63469511> rdf:type <http://www.w3.org/2006/vcard/ns#Address> .
+<http://tenderWS/address/63469511> <http://www.w3.org/2006/vcard/ns#street-address> "Nám. Míru"@cs . 
+<http://tenderWS/address/63469511> <http://ontology.eil.utoronto.ca/icontact.owl#hasStreetNumber> "1217" . 
+<http://tenderWS/address/63469511> <http://dbpedia.org/ontology/city> <https://www.hulin.cz/> .
+
+<http://tenderWS/tender/15001> <https://w3id.org/bcom#HasSupplier> <http://tenderWS/company/63469511> .
