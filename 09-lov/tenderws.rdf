@@ -1,0 +1,17 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix pc: <http://purl.org/procurement/public-contracts#> .
+@prefix akt: <http://www.aktors.org/ontology/portal#> .
+
+
+<http://tenderWS/tender/15001> rdf:type pc:Tender .
+<http://tenderWS/tender/15001> rdfs:label "Nákup tiskárny pro účetní oddělení"@cs .
+<http://tenderWS/tender/15001> akt:Amount-Of-Money "8000 CZK" .
+<http://tenderWS/tender/15001> <http://ns.nature.com/terms/date> "31/12/2022" .
+
+<http://tenderWS/tender/15002> rdf:type pc:Tender .
+<http://tenderWS/tender/15002> rdfs:label "Oprava fasády budovy v Jihlavě"@cs .
+<http://tenderWS/tender/15002> akt:Amount-Of-Money "100 000 CZK" .
+<http://tenderWS/tender/15002> <http://ns.nature.com/terms/date> "15/5/2023" .
+
+
