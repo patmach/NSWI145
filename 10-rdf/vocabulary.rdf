@@ -1,0 +1,19 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix pc: <http://purl.org/procurement/public-contracts#> .
+@prefix myvoc: <http://myvocabularyNSWI145.com> . 
+
+myvoc:Tender a rdfs:Class;
+    rdfs:label "Tender"@en, "Veřejná zakázka"@cs ;
+    rdfs:comment "The procurement of goods, services and works on behalf of a public authority, such as a government agency."@en,
+                 "Nákup zboží, zadání práce, objednání díla nebo služby, veřejným subjektem (orgánem veřejné moci), kterým je stát, obec, samosprávný celek, organizace jimi založené"@cs .
+
+myvoc:dateOfCreation a rdfs:Property;
+    rdfs:label "Date of creation"@en, "Datum vzniku"@cs ;
+    rdfs:domain <http://vivoweb.org/ontology/core#Company> ;
+    rdfs:range <crm:E50_Date> .
+
+myvoc:descriptionOfTender a rdfs:Property;
+    rdfs:label "Description of tender"@en, "Popis veřejné zakázky"@cs ;
+    rdfs:domain myvoc:Tender ;
+    rdfs:range rdfs:Literal .

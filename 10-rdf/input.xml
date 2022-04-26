@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml-stylesheet type='text/xsl' href='transform.xsl'?>
+<tender>
+    <amount>100000.0</amount>
+    <ID>15002</ID>
+    <name>Oprava fasády budovy v Jihlavě</name>
+</tender>

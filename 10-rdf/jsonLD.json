@@ -1,0 +1,25 @@
+{
+   "@context":
+   {
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "tender-address": "@id",
+      "type": "@type",
+      "Media type": "http://purl.org/dc/terms/MediaType",
+      "media-types": "https://example.org/type",
+      "Tender" : "http://myvocabularyNSWI145.com#Tender",
+      "akt": "http://www.aktors.org/ontology/portal#",
+      "name":{
+         "@id":"http://www.w3.org/2000/01/rdf-schema#label",
+         "@type":"xsd:string"
+      },
+      "amount":"http://www.aktors.org/ontology/portal#Amount-Of-Money"
+   },
+
+   "tender":
+   {
+      "tender-address":"http://tenderWS/tender/15002",
+      "type": "Tender",
+      "name":"Oprava fasády budovy v Jihlavě",
+      "amount":"100000.0"      
+   }
+}
